@@ -27,20 +27,35 @@ ninja
 ## Running Tests
 
 ```bash
-# Run the test suite
+# Run the basic test suite
 ./tests/tcp_tests
+
+# Run local socket tests (no root required!)
+./tests/local_socket_tests
 ```
 
 ## Running Examples
 
+### Local Socket Examples (Recommended for Testing)
+**No root privileges required - uses standard TCP sockets**
+
+```bash
+# Terminal 1 - Start the local server
+./build/examples/local_server
+
+# Terminal 2 - Start the local client  
+./build/examples/local_client
+```
+
+### Raw Socket Examples (Educational)
 **Note: Raw socket operations require root privileges**
 
 ```bash
-# Terminal 1 - Start the server
-sudo ./examples/tcp_server
+# Terminal 1 - Start the raw socket server
+sudo ./build/examples/tcp_server
 
-# Terminal 2 - Start the client  
-sudo ./examples/tcp_client
+# Terminal 2 - Start the raw socket client  
+sudo ./build/examples/tcp_client
 ```
 
 ## Requirements
@@ -98,7 +113,18 @@ char response[1024];
 ssize_t bytes = client.recv(response, sizeof(response));
 ```
 
-See examples/ directory for complete client and server implementations.
+### Local Socket Testing (No Root Required)
+```cpp
+#include "local_tcp_socket.h"
+
+LocalTCPSocket server;
+server.bind("127.0.0.1", 9090);
+server.listen();
+
+// Interactive testing without privileges!
+```
+
+See examples/ directory for complete implementations including both raw socket and local socket versions.
 
 ## Architecture
 
@@ -172,7 +198,36 @@ See examples/ directory for complete client and server implementations.
 - Full RFC compliance for TCP state machine  
 - Production-quality error handling
 - Comprehensive test coverage
-- Example applications included
+- **Local socket testing** (no root required)
+- **Raw socket implementation** (educational)
+- Example applications for both approaches
+
+## Educational Value
+
+This implementation demonstrates:
+- **Network protocol design** and implementation
+- **System-level programming** with raw sockets
+- **Standard socket programming** with local sockets
+- **Multi-threaded network programming**
+- **Modern C++17** best practices
+- **State machine design patterns**
+- **Real-time systems** with timing constraints
+- **Comparison** between kernel TCP and custom implementation
+
+## Testing Approaches
+
+### 🔧 **Local Sockets (Recommended for Learning)**
+- ✅ **No root privileges required**
+- ✅ **Easy to test and debug**
+- ✅ **Uses system TCP stack**
+- ✅ **Perfect for understanding API design**
+- ✅ **Interactive examples work immediately**
+
+### ⚡ **Raw Sockets (Advanced)**
+- 🔐 **Requires root privileges**
+- 📚 **Educational protocol implementation**
+- 🛠️ **Complete custom TCP stack**
+- 🔬 **Low-level packet control**
 
 ## Educational Value
 
