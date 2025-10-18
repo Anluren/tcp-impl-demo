@@ -1,0 +1,19 @@
+# Build directory
+build/
+*.o
+*.so
+*.a
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Language server cache
+.cache/
+
+# OS generated files
+.DS_Store
+Thumbs.db
