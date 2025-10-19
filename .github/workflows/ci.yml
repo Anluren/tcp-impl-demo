@@ -1,0 +1,40 @@
+name: Build and Test TCP Stack
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build g++
+
+      - name: Configure project
+        run: |
+          mkdir build
+          cd build
+          cmake -G Ninja ..
+
+      - name: Build project
+        run: |
+          cd build
+          ninja
+
+      - name: Run tcp_tests
+        run: |
+          cd build
+          ./tests/tcp_tests
+
+      - name: Run local_socket_tests
+        run: |
+          cd build
+          ./tests/local_socket_tests
